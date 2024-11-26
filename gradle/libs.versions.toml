@@ -1,5 +1,5 @@
 [versions]
-agp = "8.5.0"
+agp = "8.5.2"
 kotlin = "1.9.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -7,7 +7,18 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.9.3"
-composeBom = "2024.04.01"
+composeBom = "2024.11.00"
+retrofit = "2.11.0"
+converterGson = "2.11.0"
+accompanistGlide = "0.15.0"
+landscapistGlide = "2.4.3"
+lifecycleViewmodelCompose = "2.9.0-alpha07"
+glide = "5.0.0-rc01"
+compiler = "5.0.0-rc01"
+coilCompose = "2.7.0"
+accompanistCoil = "0.15.0"
+okhttp = "5.0.0-alpha.14"
+coilGif = "2.7.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -24,6 +35,17 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converterGson" }
+accompanist-glide = { group = "com.google.accompanist", name = "accompanist-glide", version.ref = "accompanistGlide" }
+landscapist-glide = { group = "com.github.skydoves", name = "landscapist-glide", version.ref = "landscapistGlide" }
+androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycleViewmodelCompose" }
+glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
+compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "compiler" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coilCompose" }
+accompanist-coil = { group = "com.google.accompanist", name = "accompanist-coil", version.ref = "accompanistCoil" }
+okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
+coil-gif = { group = "io.coil-kt", name = "coil-gif", version.ref = "coilGif" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

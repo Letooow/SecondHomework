@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.secondhomework"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.secondhomework"
@@ -59,6 +59,14 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+    implementation(libs.accompanist.glide)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.coil.compose)
+    implementation(libs.accompanist.coil)
+    implementation(libs.okhttp)
+    implementation(libs.coil.gif)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
