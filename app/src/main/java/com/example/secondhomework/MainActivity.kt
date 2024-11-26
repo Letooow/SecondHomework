@@ -2,6 +2,7 @@ package com.example.secondhomework
 
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -12,6 +13,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,6 +26,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,6 +40,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil.decode.GifDecoder
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,17 +86,29 @@ fun CatScreen(viewModel: CatViewModel) {
 
                     if (catId != null) {
 
-                        CatImage(
-                            url = catId.url,
-                            width = catId.width,
-                            height = catId.height,
-                            description = if (catId.url.endsWith(".git")) "GIF Image" else "Random Cat"
-                        )
+                        if (!catId.isGiphy) {
+
+                            CatImage(
+                                url = catId.catResponse!!.url,
+                                width = catId.catResponse.width,
+                                height = catId.catResponse.height,
+                                description = "Cat"
+                            )
+                        } else {
+                            CatImage(
+                                url = catId.giphyResponse!!.data.images.original.url,
+                                width = (catId.giphyResponse.data.images.original.width).toInt(),
+                                height = (catId.giphyResponse.data.images.original.height).toInt(),
+
+                                description = "GIF Image"
+                            )
+                        }
 
                     }
                 }
             }
         }
+
         if (errorMessageOfImage.value != null) {
             Text(
                 text = "Error ${errorMessageOfImage.value}",
@@ -103,17 +119,29 @@ fun CatScreen(viewModel: CatViewModel) {
             )
         }
 
-        Box(
-            modifier = Modifier.fillMaxWidth()
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Button(
-                modifier = Modifier.align(Alignment.Center),
+                colors = ButtonColors(Color.Gray, Color.White, Color.Black, Color.White),
                 onClick = { viewModel.fetchRandomCat() }
             ) {
                 if (errorMessageOfImage.value != null) {
                     Text("Try again")
                 } else {
                     Text("Get Cat")
+                }
+            }
+
+            Button(
+                colors = ButtonColors(Color.DarkGray, Color.White, Color.Black, Color.White),
+                onClick = { viewModel.fetchRandomGif() }
+            ) {
+                if (errorMessageOfImage.value != null) {
+                    Text("Try again")
+                } else {
+                    Text("Get GIF Cat")
                 }
             }
         }
@@ -124,12 +152,12 @@ fun CatScreen(viewModel: CatViewModel) {
 @Composable
 fun CatImage(
     url: String,
-    width: Int,
-    height: Int,
+    width: Int = 350,
+    height: Int = 600,
     description: String
 ) {
-    val maxWidth = 350.dp
-    val maxHeight = 350.dp
+    val maxWidth = width.dp
+    val maxHeight = height.dp
     val aspectRatio = width.toFloat() / height.toFloat()
     val displayWidth: Dp
     val displayHeight: Dp
@@ -147,6 +175,7 @@ fun CatImage(
     AsyncImage(
         model = ImageRequest.Builder(LocalContext.current)
             .data(url)
+            .decoderFactory(GifDecoder.Factory())
             .crossfade(true)
             .build(),
         contentDescription = description,

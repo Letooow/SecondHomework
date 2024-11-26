@@ -1,25 +1,23 @@
 package com.example.secondhomework
 
 import retrofit2.Retrofit
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 
-object RetrofitController {
+object CatRetrofitController {
     private const val BASE_URL = "https://api.thecatapi.com/"
 
 
     val api: CatApi by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .client(client)
+            .client(clientCatApi)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(CatApi::class.java)
     }
 
-    private val client: OkHttpClient by lazy {
+    private val clientCatApi: OkHttpClient by lazy {
         OkHttpClient.Builder()
             .addInterceptor { chain ->
                 val request = chain.request().newBuilder()
@@ -28,6 +26,18 @@ object RetrofitController {
                 chain.proceed(request)
             }
             .build()
+    }
+}
+
+object GiphyRetrofitController {
+    private const val BASE_URL = "https://api.giphy.com/"
+
+    val api: GiphyApi by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(GiphyApi::class.java)
     }
 
 }
