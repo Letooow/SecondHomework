@@ -35,7 +35,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -92,7 +94,7 @@ fun CatScreen(viewModel: CatViewModel) {
                                 url = catId.catResponse!!.url,
                                 width = catId.catResponse.width,
                                 height = catId.catResponse.height,
-                                description = "Cat"
+                                description = "Random Cat"
                             )
                         } else {
                             CatImage(
@@ -100,7 +102,7 @@ fun CatScreen(viewModel: CatViewModel) {
                                 width = (catId.giphyResponse.data.images.original.width).toInt(),
                                 height = (catId.giphyResponse.data.images.original.height).toInt(),
 
-                                description = "GIF Image"
+                                description = "Funny cat GIF"
                             )
                         }
 
@@ -183,8 +185,12 @@ fun CatImage(
         modifier = Modifier
             .size(displayWidth, displayHeight)
             .clip(RoundedCornerShape(16.dp))
+            .clickable {
+
+            }
     )
 }
+
 
 @Preview(showSystemUi = true)
 @Composable

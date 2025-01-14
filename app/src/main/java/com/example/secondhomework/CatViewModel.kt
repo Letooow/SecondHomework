@@ -37,7 +37,8 @@ class CatViewModel : ViewModel() {
                 val response = CatRetrofitController.api.getRandomCat(1)
                 if (response.isNotEmpty()) {
                     _catData[newElementIndex] = Response(
-                        isGiphy = false, catResponse = response[0], giphyResponse = null)
+                        isGiphy = false, catResponse = response[0], giphyResponse = null
+                    )
                 }
             } catch (e: Exception) {
                 _errorMessage.value = e.message
@@ -47,7 +48,6 @@ class CatViewModel : ViewModel() {
             }
         }
     }
-
 
     // Взять гифку кота
     fun fetchRandomGif() {
@@ -59,7 +59,7 @@ class CatViewModel : ViewModel() {
 
         viewModelScope.launch {
             try {
-                val response = GiphyRetrofitController.api.getRandomGif(  "3QEPipprdmVmluQ3FUUFSzDotxmGJbpE")
+                val response = GiphyRetrofitController.api.getRandomGif("3QEPipprdmVmluQ3FUUFSzDotxmGJbpE", 1)
                 _catData[newElementIndex] = Response(
                     isGiphy = true,
                     catResponse = null,
